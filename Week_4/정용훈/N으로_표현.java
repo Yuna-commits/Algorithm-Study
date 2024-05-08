@@ -8,6 +8,6 @@ public class N으로_표현 {
 
 class Solution {
     public int solution(int N, int number) {
-        return 이거 존나 어렵네;
+        return 1;
     }
 }
