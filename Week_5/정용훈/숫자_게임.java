@@ -4,13 +4,13 @@ import java.util.stream.Collectors;
 
 public class 숫자_게임 {
     public static void main(String[] args) {
-        Sol sol = new Sol();
+        Solution sol = new Solution();
 
         sol.sol(new int[]{5,1,3,7}, new int[]{2, 2, 6, 8});
     }
 }
 
-class Sol {
+class Solution {
     // 아이디어 최소힙 이용
 
     // 1. A와 B 둘다 최소힙 이용하여 오름차순으로 정렬
