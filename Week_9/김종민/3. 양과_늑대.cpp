@@ -3,10 +3,10 @@
 #include <iostream>
 
 auto max_sheep = 0;			// 최대로 구할 수 있는 양의 수
-auto start_flag = true;		// 시작할 때 양의 수와 늑대의 수가 같기 때문에 이를 배제하기 위한 변수
+auto start_flag = true;			// 시작할 때 양의 수와 늑대의 수가 같기 때문에 이를 배제하기 위한 변수
 
 void dfs(const std::vector<int>& info, const std::vector<std::vector<int>>& tree, 
-						int cur_sheep, int cur_wolf, std::vector<int> next_nodes)
+			int cur_sheep, int cur_wolf, std::vector<int> next_nodes)
 {
 	// 모두 잡아먹혔다면 돌아간다.
 	if (!start_flag and cur_sheep <= cur_wolf)
