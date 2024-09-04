@@ -1,40 +1,38 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
-#include<math.h>
-#define min(a,b)(a<b?a:b)
-int Xs, Ys;
-int Xe, Ye, dx, dy;
-double get_distance(int x1, int y1) {
-                double tmp = pow((x1 - Xs), 2) + pow((y1 - Ys), 2);
-                return sqrt(tmp);
+#define MAX_SIZE 15
+#define swap(a,b) {char t=a; a=b; b=t;}
+char code[MAX_SIZE], tmp[MAX_SIZE];
+int L, C;
+int is_satis() {//모음, 자음 조건 만족 확인
+                int vo = 0, con = 0;
+                for (int i = 0; i < L; i++) {
+                                switch (tmp[i]) {
+                                case 'a': case 'e': case 'i': case 'o': case 'u': vo++; break;
+                                default: con++; break;
+                                }
+                }
+                if (vo >= 1 && con >= 2) return 1;
+                else return 0;
 }
-void fix_dxdy() {//dx,dy를 가장 작게 만들어 매순간(1초마다 X) 이동하는 위치 구하기
-                int small = min(dx, dy);
-                if (small == 0) {//둘 중 하나가 0이면 다른 하나를 1로 만듬
-                                if (dx == 0) dy = 1;
-                                else dx = 1;
+void dfs(int cnt, int idx) {
+                if (cnt == L && is_satis()) {
+                                for (int i = 0; i < L; i++) printf("%c", tmp[i]);
+                                printf("\n");
                                 return;
                 }
-                //최대공약수를 구해서 나누기
-                while (small) {
-                                if (dx % small == 0 && dy % small == 0) break;
-                                else small--;
+                for (int i = idx; i <= C; i++) {
+                                tmp[cnt] = code[i];
+                                dfs(cnt + 1, i + 1);
                 }
-                if (small > 1) { dx /= small; dy /= small; }
 }
 int main()
 {
-                scanf("%d%d", &Xs, &Ys);
-                scanf("%d%d%d%d", &Xe, &Ye, &dx, &dy);
-                //열차는 계속 정류장에 가까워졌다가 어느 순간 멀어짐
-                //현재 정류장까지의 거리<=다음 정류장까지의 거리일 때가 가장 근접한 경우
-                fix_dxdy();
-                while (1) {
-                                if (get_distance(Xe, Ye) < get_distance(Xe + dx, Ye + dy)) break;
-                                else {
-                                                Xe += dx;
-                                                Ye += dy;
+                scanf("%d%d", &L, &C);
+                for (int i = 1; i <= C; i++) scanf(" %c", &code[i]);
+                for (int i = 1; i < C; i++) {
+                                for (int j = i + 1; j <= C; j++) {
+                                                if (code[i] > code[j]) swap(code[i], code[j]);
                                 }
                 }
-                printf("%d %d", Xe, Ye);
+                dfs(0, 1);
 }
